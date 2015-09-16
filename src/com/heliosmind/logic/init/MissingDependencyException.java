@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @author Samuel Beausoleil
  *
  */
-public class MissingDependencyException extends Exception {
+public class MissingDependencyException extends DependencyException {
     private static final long serialVersionUID = -956613802067775897L;
 
     public MissingDependencyException(String className, String[] missingDependencies) {
