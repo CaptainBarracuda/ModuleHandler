@@ -1,10 +1,17 @@
-package com.heliosmind.logic.init;
+package com.heliosmind.modulehandler;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
-import java.util.HashMap;
 
-public class ModuleHandlerException extends Exception {
+/**
+ * A cumulative exceptions and errors report of all the exceptions and potential errors that may
+ * have come up during the module loading process.
+ * 
+ * @author Samuel Beausoleil
+ */
+public class InitializationException extends Exception {
     private static final long serialVersionUID = -3798308314798633971L;
 
     /**
@@ -16,16 +23,16 @@ public class ModuleHandlerException extends Exception {
 
     private LinkedList<DependencyException> dependencyExceptions;
 
-    public ModuleHandlerException() {
+    public InitializationException() {
 	exceptions = new LinkedList<Exception>();
 	handlerExceptions = new HashMap<String, MissingHandlerException>();
 	dependencyExceptions = new LinkedList<DependencyException>();
     }
 
     /**
-     * Returns the handlerExceptions.
+     * Returns the map for MissingHandlerExceptions.
      * 
-     * @return the handlerExceptions
+     * @return a map containing all of the MissingHandlerExceptions encountered.
      */
     public HashMap<String, MissingHandlerException> getHandlerExceptions() {
 	return handlerExceptions;
@@ -79,20 +86,30 @@ public class ModuleHandlerException extends Exception {
 	this.exceptions = exceptions;
     }
 
-    public void registerMissingHandlerException(String extension, String moduleName) {
+    public void registerMissingHandlerException(String extension, File fileName) {
 	// Check if there already is an exception for that extension
 	boolean createException = true;
 	for (Entry<String, MissingHandlerException> entry : handlerExceptions.entrySet()) {
 	    if (entry.getKey().equalsIgnoreCase(extension)) {
 		createException = false;
-		entry.getValue().registerUnloadedModule(moduleName);
+		entry.getValue().registerUnloadedFile(fileName);
 	    }
 	}
 
 	if (createException) {
-	    MissingHandlerException e = new MissingHandlerException(extension, moduleName);
+	    MissingHandlerException e = new MissingHandlerException(extension, fileName);
 	    exceptions.add(e);
 	    handlerExceptions.put(extension, e);
 	}
+    }
+
+    public void registerException(Exception e) {
+	if (e instanceof DependencyException)
+	    dependencyExceptions.add((DependencyException) e);
+	exceptions.add(e);
+    }
+
+    public boolean hasExceptions() {
+	return exceptions.size() > 0;
     }
 }

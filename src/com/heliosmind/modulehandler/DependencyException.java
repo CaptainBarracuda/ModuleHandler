@@ -1,5 +1,11 @@
-package com.heliosmind.logic.init;
+package com.heliosmind.modulehandler;
 
+/**
+ * Superclass of all dependency related exceptions.
+ * 
+ * @author Samuel Beausoleil
+ *
+ */
 public class DependencyException extends Exception {
     private static final long serialVersionUID = -971918380611469870L;
 

@@ -1,4 +1,4 @@
-package com.heliosmind.logic.init;
+package com.heliosmind.modulehandler;
 
 public abstract class AbstractModule {
 

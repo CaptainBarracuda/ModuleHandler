@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.heliosmind.logic.init;
+package com.heliosmind.modulehandler;
 
 import java.util.Arrays;
 
@@ -15,5 +15,9 @@ public class MissingDependencyException extends DependencyException {
 
     public MissingDependencyException(String className, String[] missingDependencies) {
 	super("The class " + className + " is missing the following dependencies: " + Arrays.toString(missingDependencies));
+    }
+
+    public MissingDependencyException(String className, String missingDependency, Throwable cause) {
+	super("The class " + className + " is missing the folloginw dependency " + missingDependency, cause);
     }
 }

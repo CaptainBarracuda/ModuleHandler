@@ -1,4 +1,4 @@
-package com.heliosmind.logic.init;
+package com.heliosmind.modulehandler;
 
 /**
  * Exception thrown when a module part of a dependency chain requires as a dependency a module that is already part of the dependency chain.

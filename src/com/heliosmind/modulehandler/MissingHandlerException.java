@@ -1,18 +1,19 @@
-package com.heliosmind.logic.init;
+package com.heliosmind.modulehandler;
 
+import java.io.File;
 import java.util.LinkedList;
 
 public class MissingHandlerException extends Exception {
     private static final long serialVersionUID = 6634496329838454376L;
 
     private String missingExtension;
-    private LinkedList<String> unloadedModules;
+    private LinkedList<File> unloadedFiles;
     
-    public MissingHandlerException(String missingExtension, String... unloadedModules) {
+    public MissingHandlerException(String missingExtension, File... unloadedFiles) {
 	this.missingExtension = missingExtension;
-	this.unloadedModules = new LinkedList<String>();
-	for (String unloadedModule : unloadedModules)
-	    this.unloadedModules.add(unloadedModule);
+	this.unloadedFiles = new LinkedList<File>();
+	for (File unloadedModule : unloadedFiles)
+	    this.unloadedFiles.add(unloadedModule);
     }
 
     /**
@@ -35,19 +36,19 @@ public class MissingHandlerException extends Exception {
      * Returns the unloadedModules.
      * @return the unloadedModules
      */
-    public LinkedList<String> getUnloadedModules() {
-        return unloadedModules;
+    public LinkedList<File> getUnloadedFiles() {
+        return unloadedFiles;
     }
 
     /**
      * Sets the value of unloadedModules to that of the parameter.
-     * @param unloadedModules the unloadedModules to set
+     * @param unloadedFiles the unloadedModules to set
      */
-    public void setUnloadedModules(LinkedList<String> unloadedModules) {
-        this.unloadedModules = unloadedModules;
+    public void setUnloadedFiles(LinkedList<File> unloadedFiles) {
+        this.unloadedFiles = unloadedFiles;
     }
 
-    public void registerUnloadedModule(String unloadedModule) {
-	unloadedModules.add(unloadedModule);
+    public void registerUnloadedFile(File unloadedFile) {
+	unloadedFiles.add(unloadedFile);
     }
 }
